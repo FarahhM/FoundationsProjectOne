@@ -11,7 +11,7 @@ signature_price = 2.750
 total = 0
 ############################# Start Here! ##############################
 cupcake_shop_name = "Bakers"
-signature_flavors = ["Carrot", "Marble", "Blueberry Swirl", "pumpkin", "red velvet"]
+signature_flavors = ["carrot", "marble", "blueberryswirl", "pumpkin", "red velvet"]
 order_list = []
 
 
@@ -47,14 +47,12 @@ def print_signatures():
 def is_valid_order(order):
   """
   Check if an order exists in the shop.
-  ***NOTE***: i wrote what i have in mind for validating the order, yet it didn't work. i think i'm not getting passing variables between functions
   """
-  for y in order:
-    if y not in original_flavors or y not in original_flavors or y not in signature_flavors:
-      return False 
-    else:
-      return True
-    
+
+  if order.lower() in menu or order.lower() in original_flavors or order.lower() in signature_flavors  :
+    return True  
+  else:
+    return False
 
 
 
@@ -62,26 +60,20 @@ def get_order():
   """
   Repeatedly ask customer for order until they end their order by typing "Exit".
   """
-  o=' '
-  cond=True
-  order_list = []
-  print("Please provide your order as written in the menu. Type 'exit' to end your order")
   
-  while cond: 
-    o= input() 
-    f=is_valid_order(o)
-    if o !="exit":
-      if  is_valid_order() :
-        order_list.append(o)
+  order_list = []
+  
+  order=input("Please provide your order as written in the menu. Type 'exit' to end your order\n")
+  while order.lower() !="exit": 
+      if  is_valid_order(order)==True:
+        order_list.append(order)
+        order=input()
       else:
-        return order_list   
-    else: 
-      cond==False
-      break
+        print("That doesn't included in our menu")
+        order=input()  
+    
   return order_list
     
-    
-
 
 def accept_credit_card(total):
   """
@@ -112,8 +104,9 @@ def print_order(order_list):
   """
   Print the order of the customer.
   """
+  total_price= get_total_price(order_list)
   print("Your order is:%s " % order_list) 
   print("Your bill is:%s"  %get_total_price(order_list))
-  print (accept_credit_card(total))
+  print(accept_credit_card(total_price))
   print("Thank you for visiting %s" %cupcake_shop_name)
   
